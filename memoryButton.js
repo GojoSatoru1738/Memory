@@ -21,26 +21,22 @@ export class MemoryButton {
         canvas.addEventListener("click", (e) => this.onClick(e));
     }
 
-    draw() {
-        if (!this.isFaceUp) {
+ draw() {
+    if (this.isFaceUp) {
+      
+        this.pencil.fillStyle = this.color;
+        this.pencil.fillRect(this.x, this.y, this.width, this.height);
+    } else {
+       
         this.pencil.fillStyle = "#444";
         this.pencil.fillRect(this.x, this.y, this.width, this.height);
 
-  
         this.pencil.fillStyle = "white";
-        this.pencil.font = "50px Arial";
-         this.pencil.fillText("Ye", this.x + 35, this.y + 60);
+        this.pencil.font = "50px Times New Roman";
+        this.pencil.fillText("Ye", this.x + 35, this.y + 60);
+    }
 }
 
-        if(this.isFaceUp) {
-            this.pencil.fillStyle = this.color; 
-            this.pencil.fillRect(this.x, this.y, this.width, this.height); 
-        } else {
-            this.pencil.strokeStyle = "gray"; // Set the outline color to red
-            this.pencil.lineWidth = 10;       // Set the outline width to 2 pixels
-            this.pencil.strokeRect(this.x, this.y, this.width, this.height); 
-        }
-    }
     
     onClick(event) {
         let clickX = event.offsetX;
