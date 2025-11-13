@@ -33,7 +33,7 @@ export class MemoryButton {
 
         this.pencil.fillStyle = "white";
         this.pencil.font = "50px Times New Roman";
-        this.pencil.fillText("Ye", this.x + 35, this.y + 60);
+        this.pencil.fillText("?", this.x + 35, this.y + 60);
     }
 }
 
