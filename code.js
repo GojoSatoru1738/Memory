@@ -13,13 +13,30 @@ let rows = 2;
 let cols = 4;
 let cardWidth = 100;
 let cardHeight = 100;
+let padding = 20;
 
 let colors = [];
 for (let i = 0; i < (rows * cols) /2; i++) {
-    color.push(toolbox.getRandomColor());
+    colors.push(toolbox.getRandomColor());
 }
 
 colors = toolbox.shuffleArray([...colors, ...colors]);
+
+let cards = [];
+for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+        let x = padding + c * (cardWidth + padding);
+        let y = padding + r * (cardHeight + padding);
+        let color = colors.pop();
+        let card = new MemoryButton(canvas, pencil, x, y, color);
+        cards.push(card);
+    }
+}
+
+
+
+
+
 
 
 
