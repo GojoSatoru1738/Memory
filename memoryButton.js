@@ -22,14 +22,23 @@ export class MemoryButton {
     }
 
     draw() {
-        
+        if (!this.isFaceUp) {
+        this.pencil.fillStyle = "#444";
+        this.pencil.fillRect(this.x, this.y, this.width, this.height);
+
+  
+        this.pencil.fillStyle = "white";
+        this.pencil.font = "50px Arial";
+         this.pencil.fillText("Ye", this.x + 35, this.y + 60);
+}
+
         if(this.isFaceUp) {
-            this.pencil.fillStyle = this.color; // Set the fill color
-            this.pencil.fillRect(this.x, this.y, this.width, this.height); // Draw a filled rectangle at (50, 50) with width 100 and height 75
-        } else { //draw face down
+            this.pencil.fillStyle = this.color; 
+            this.pencil.fillRect(this.x, this.y, this.width, this.height); 
+        } else {
             this.pencil.strokeStyle = "gray"; // Set the outline color to red
             this.pencil.lineWidth = 10;       // Set the outline width to 2 pixels
-            this.pencil.strokeRect(this.x, this.y, this.width, this.height); // Draws an outlined rectangle at (50,50) with width 100 and height 75
+            this.pencil.strokeRect(this.x, this.y, this.width, this.height); 
         }
     }
     
