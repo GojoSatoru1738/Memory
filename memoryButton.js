@@ -51,8 +51,18 @@ export class MemoryButton {
         }
     }
 
-    
-    
+    flip() {
+    if (this.isFaceUp) return;
+
+    this.isFaceUp = true;
+    flippedCards.push(this);
+
+    if (flippedCards.length === 2) {
+        checkMatch();
+    }
+}
+
+
     
 
 

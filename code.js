@@ -32,7 +32,7 @@ for (let r = 0; r < rows; r++) {
         cards.push(card);
 
     }
-    let flippedCards = [];
+let flippedCards = [];
 
 function checkMatch() {
     if (flippedCards.length < 2) return;
@@ -51,6 +51,32 @@ function checkMatch() {
         }, 800);
     }
 }
+function gameLoop() {
+    pencil.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let card of cards) {
+        card.draw();
+    }
+    function checkWin() {
+    let allFaceUp = cards.every(card => card.isFaceUp);
+
+    if (allFaceUp) {
+        pencil.fillStyle = "white";
+        pencil.font = "50px Arial";
+        pencil.fillText("YOU WIN!", 150, 300);
+    }
+}
+function gameLoop() {
+    pencil.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let card of cards) card.draw();
+
+    checkWin();
+}
+
+}
+
+setInterval(gameLoop, 30);  
 
 }
 
