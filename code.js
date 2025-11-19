@@ -30,7 +30,28 @@ for (let r = 0; r < rows; r++) {
         let color = colors.pop();
         let card = new MemoryButton(canvas, pencil, x, y, color);
         cards.push(card);
+
     }
+    let flippedCards = [];
+
+function checkMatch() {
+    if (flippedCards.length < 2) return;
+
+    let [c1, c2] = flippedCards;
+
+    if (c1.color === c2.color) {
+       
+        flippedCards = [];  
+    } else {
+        
+        setTimeout(() => {
+            c1.isFaceUp = false;
+            c2.isFaceUp = false;
+            flippedCards = [];
+        }, 800);
+    }
+}
+
 }
 
 
