@@ -1,13 +1,10 @@
 import { MemoryButton } from "./memoryButton.js";
-import { Toolbox } from "./ColorMemory-main/toolbox.js";
+import { Toolbox } from "./toolbox.js";
 
 let canvas = document.getElementById("myCanvas");
-let pencil = canvas.getContext("2d"); // This gives you the drawing context, like a pencil
-let toolbox = new Toolbox();
+let pencil = canvas.getContext("2d");
 
-let color1 = toolbox.getRandomColor();
-let card1a = new MemoryButton(canvas, pencil, 50, 50, color1);
-let card1b = new MemoryButton(canvas, pencil, 200, 50, color1);
+let toolbox = new Toolbox();
 
 let rows = 2;
 let cols = 4;
@@ -15,35 +12,47 @@ let cardWidth = 100;
 let cardHeight = 100;
 let padding = 20;
 
+let cards = [];
+let flippedCards = [];   // GLOBAL
+
+// Create color pairs
 let colors = [];
-for (let i = 0; i < (rows * cols) /2; i++) {
+for (let i = 0; i < (rows * cols) / 2; i++) {
     colors.push(toolbox.getRandomColor());
 }
-
 colors = toolbox.shuffleArray([...colors, ...colors]);
 
-let cards = [];
+// Create card objects
 for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
         let x = padding + c * (cardWidth + padding);
         let y = padding + r * (cardHeight + padding);
         let color = colors.pop();
-        let card = new MemoryButton(canvas, pencil, x, y, color);
-        cards.push(card);
 
+        let card = new MemoryButton(canvas, pencil, x, y, color, handleFlip);
+        cards.push(card);
     }
-let flippedCards = [];
+}
+
+// Called by each card when it's flipped
+function handleFlip(card) {
+    if (card.isFaceUp === false) return;
+
+    flippedCards.push(card);
+
+    if (flippedCards.length === 2) {
+        checkMatch();
+    }
+}
 
 function checkMatch() {
-    if (flippedCards.length < 2) return;
-
     let [c1, c2] = flippedCards;
 
     if (c1.color === c2.color) {
-       
-        flippedCards = [];  
+        // Leave them face-up
+        flippedCards = [];
     } else {
-        
+        // Flip back after delay
         setTimeout(() => {
             c1.isFaceUp = false;
             c2.isFaceUp = false;
@@ -51,21 +60,15 @@ function checkMatch() {
         }, 800);
     }
 }
-function gameLoop() {
-    pencil.clearRect(0, 0, canvas.width, canvas.height);
 
-    for (let card of cards) {
-        card.draw();
-    }
-    function checkWin() {
-    let allFaceUp = cards.every(card => card.isFaceUp);
-
-    if (allFaceUp) {
+function checkWin() {
+    if (cards.every(c => c.isFaceUp)) {
         pencil.fillStyle = "white";
         pencil.font = "50px Arial";
         pencil.fillText("YOU WIN!", 150, 300);
     }
 }
+
 function gameLoop() {
     pencil.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -74,24 +77,4 @@ function gameLoop() {
     checkWin();
 }
 
-}
-
-setInterval(gameLoop, 30);  
-
-}
-
-
-
-
-
-
-
-
-function gameLoop() {
-
-    pencil.clearRect(0,0, canvas.width, canvas.height);
-    card1a.draw();
-    card1b.draw();
-}
-
-setInterval(gameLoop, 50);
+setInterval(gameLoop, 30);
